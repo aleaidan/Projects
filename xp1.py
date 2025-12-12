@@ -27,12 +27,12 @@ try:
     VIDEO_AVAILABLE = True
 except ImportError:
     VIDEO_AVAILABLE = False
-    print("[WARNING] imageio not available. Video playback disabled. Install with: pip install imageio")
+    print("[WARNING] imageio not available. Video playback disabled. Install with: pip install imageio[ffmpeg]")
 
 # --- DEFINE ASSETS DIRECTORY HERE ---
 # Resolve assets directory from a shortlist of common names so this works
 BASE_DIR = Path(__file__).resolve().parent
-_ASSET_CANDIDATES = ["media", "Media", "media assets", "Media Assets", "assets", "Assets", "Media Assets"]
+_ASSET_CANDIDATES = ["media_assets", "Media_Assets", "media", "Media", "media assets", "Media Assets", "assets", "Assets", "Media Assets"]
 ASSETS = None
 for _n in _ASSET_CANDIDATES:
     _p = BASE_DIR / _n
@@ -760,17 +760,15 @@ class DesktopIcon:
             if self.texture:
                 # Use draw_texture_compat to draw the texture
                 draw_texture_compat(self.base_center_x, self.base_center_y - 8, self.size, self.size, self.texture)
-            elif self.sprite:
-                self.sprite.draw()
+            else:
+                # Fallback: draw a solid gray rectangle for the icon
+                draw_rect_compat(self.base_center_x, self.base_center_y - 8, self.size, self.size, arcade.color.GRAY)
         except Exception as e:
             print(f"[ERROR] Failed to draw {self.label}: {e}")
             import traceback
             traceback.print_exc()
-            if self.sprite:
-                try:
-                    self.sprite.draw()
-                except:
-                    draw_rect_compat(self.base_center_x, self.base_center_y - 8, self.size, self.size, arcade.color.GRAY)
+            # Fallback fallback: draw a rectangle if all else fails
+            draw_rect_compat(self.base_center_x, self.base_center_y - 8, self.size, self.size, arcade.color.GRAY)
         # Icon labels are optional; controlled by SHOW_ICON_LABELS flag
         try:
             if SHOW_ICON_LABELS:
