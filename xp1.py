@@ -1,13 +1,4 @@
-""""
-xp_windows.py
-A small XP-style windowing system in Arcade (3.x compatible).
 
-Patched:
-- Desktop icons are now arcade.Sprite instances (better PNG handling)
-- Wallpaper image support (falls back to solid color)
-- Minor robustness fixes for texture drawing across arcade versions
-- Video playback support in custom popup windows
-"""
 import time
 import os
 import math
@@ -27,7 +18,7 @@ try:
     VIDEO_AVAILABLE = True
 except ImportError:
     VIDEO_AVAILABLE = False
-    print("[WARNING] imageio not available. Video playback disabled. Install with: pip install imageio[ffmpeg]")
+    print("[WARNING] Video playback disabled.  pip install imageio[ffmpeg]")
 
 # --- DEFINE ASSETS DIRECTORY HERE ---
 # Resolve assets directory from a shortlist of common names so this works
@@ -63,8 +54,7 @@ ORBIT_SPEED = 0.2
 
 def draw_texture_compat(cx, cy, w, h, texture):
     """
-    Draw a texture at center position (cx, cy) with size (w, h).
-    Works with Arcade 3.x.
+    Draw  texture at window center (cx, cy) with size (w, h).
     """
     # Guard against invalid dimensions
     if w <= 0 or h <= 0:
